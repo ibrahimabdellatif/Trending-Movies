@@ -6,8 +6,87 @@
     android:layout_height="match_parent"
     tools:context=".MovieDetailsActivity">
 
+    <!--    <GridLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="300dp"-->
+    <!--        android:background="@drawable/grid_style"-->
+    <!--        android:padding="15dp"-->
+    <!--        tools:ignore="MissingConstraints">-->
     <ImageView
+        android:id="@+id/iv_movie_poster_details"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/movie_poster"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_movie_title_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:paddingLeft="12dp"
+        android:text="movie title"
+        android:textColor="@color/black"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/iv_movie_poster_details"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_movie_date_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="2021-07-15"
+        android:textSize="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_title_details"
+        tools:ignore="MissingConstraints"
+        tools:paddingLeft="16dp" />
+
+    <ImageView
+        android:id="@+id/star_rating"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginTop="71.5dp"
+        android:src="@drawable/star_rate"
+        app:layout_constraintEnd_toStartOf="@+id/tv_movie_rating_details"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_title_details"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_movie_rating_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="4dp"
+        android:text="8.2"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_date_details"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="29dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Over View"
+        android:textSize="14dp"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_rating_details"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_movie_over_view_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="James Bond has left active service. His peace is short-lived when Felix Leiter, an old friend from the CIA, turns up asking for help, leading Bond onto the trail of a mysterious villain armed with dangerous new technology."
+        android:textSize="12dp"
+        android:layout_marginTop="35dp"
+        android:paddingLeft="20dp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/tv_movie_rating_details"
+        tools:ignore="MissingConstraints" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
