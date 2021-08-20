@@ -2,7 +2,7 @@ package com.ibrahim.trendingmovies;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,17 +27,14 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MovieAdapter adapter;
     private MovieAPI movieAPI;
-    //    private List<Movie> moviesList = new ArrayList<>();
-//    private Movie movieTest;
     private Retrofit retrofit;
-    private TextView tvTestPosts;
+    private List<Movie> movieList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvTestPosts = findViewById(R.id.tv_test_posts);
 
         Gson gson = new GsonBuilder().serializeNulls().create();
         retrofit = new Retrofit.Builder()
@@ -47,75 +44,31 @@ public class MainActivity extends AppCompatActivity {
 
         movieAPI = retrofit.create(MovieAPI.class);
         getMovie();
-
-
     }
 
     private void getMovie() {
-        Call<List<Movie>> call = movieAPI.getMovie(API_KEY);
-
-        call.enqueue(new Callback<List<Movie>>() {
+        Call<Results> call = movieAPI.getResults(API_KEY, pageNumber);
+        call.enqueue(new Callback<Results>() {
             @Override
-            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+            public void onResponse(Call<Results> call, Response<Results> response) {
                 if (!response.isSuccessful()) {
-                    //Toast.makeText(MainActivity.this, "Code: " + response.code(), Toast.LENGTH_SHORT).show();
-                    tvTestPosts.setText("response: " + response.code());
-                    return;
+                    Log.d("on Response", response.code() + "");
                 }
-                List<Movie> movies = response.body();
-                for (Movie movie : movies) {
-                    String content = "";
-                    content += "Title" + movie.getName();
-                    content += "date" + movie.getDate();
-                    content += "imagePath" + movie.getImagePath();
-                    content += "overview" + movie.getOverview();
-                    content += "rating" + movie.getRating();
+                Results results = response.body();
+                setRecyclerView(results.getResults());
 
-                    tvTestPosts.append(content);
-                }
             }
 
             @Override
-            public void onFailure(Call<List<Movie>> call, Throwable t) {
-                tvTestPosts.setText("failure: " + t.getMessage());
+            public void onFailure(Call<Results> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.getMessage() + "", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void getPosts() {
-        Call<List<Test>> call = movieAPI.getPosts();
-
-        call.enqueue(new Callback<List<Test>>() {
-            @Override
-            public void onResponse(Call<List<Test>> call, Response<List<Test>> response) {
-                if (!response.isSuccessful()) {
-                    tvTestPosts.setText("code : " + response.code());
-                    return;
-                }
-                List<Test> tests = response.body();
-                for (Test test : tests) {
-                    String content = "";
-                    content += "ID: " + test.getId() + "\n";
-                    content += "UserId: " + test.getUserId() + "\n";
-                    content += "Title: " + test.getTitle() + "\n";
-                    content += "Text: " + test.getBody() + "\n\n";
-
-                    tvTestPosts.append(content);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Test>> call, Throwable t) {
-                tvTestPosts.setText(t.getMessage());
-            }
-        });
-
-    }
-
-
-    void setRecyclerView() {
-        //adapter = new MovieAdapter(moviesList);
+    void setRecyclerView(List<Movie> movies) {
+        movieList = movies;
+        adapter = new MovieAdapter(movieList, this);
         recyclerView = findViewById(R.id.rv_movie_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -129,5 +82,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }

@@ -15,7 +15,7 @@ public interface MovieAPI {
 
 
     @GET("trending/movie/day")
-    Call<List<Movie>> getMovie(@Query("api_key") String api_key);
+    Call<Results> getResults(@Query("api_key") String api_key , @Query("page_number") int page_number);
 
     /**
      * this part is just for testing

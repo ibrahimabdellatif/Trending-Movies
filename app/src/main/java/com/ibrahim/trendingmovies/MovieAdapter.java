@@ -15,17 +15,16 @@ import com.bumptech.glide.Glide;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.http.Url;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private Context context;
     private List<Movie> movies;
     private OnMovieListener listener;
-    public MovieAdapter(List<Movie> moviesList) {
+
+    public MovieAdapter(List<Movie> moviesList , Context context) {
         this.movies = moviesList;
+        this.context = context;
     }
 
     @NonNull
@@ -33,7 +32,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.movie_item , parent , false);
+                .inflate(R.layout.movie_item, parent, false);
 
         return new MovieViewHolder(itemView);
     }
@@ -42,6 +41,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(@NonNull @NotNull MovieAdapter.MovieViewHolder holder, int position) {
         Movie currentMovie = movies.get(position);
         Uri image_url = Uri.parse(currentMovie.getImagePath());
+
         Glide.with(context).load(image_url).into(holder.ivMoviePoster);
         holder.tvMovieTitle.setText(currentMovie.getName());
         holder.tvMovieDate.setText(currentMovie.getDate());
@@ -51,15 +51,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public int getItemCount() {
         //movies == null ? 0 :
-            return movies.size();
+        return movies.size();
     }
-    public void setMovies(List<Movie> movies){
+
+    public void setMovies(List<Movie> movies) {
         this.movies = movies;
         //not included
         //notifyDataSetChanged();
     }
 
-    class MovieViewHolder extends RecyclerView.ViewHolder{
+    class MovieViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivMoviePoster;
         private TextView tvMovieTitle;
         private TextView tvMovieDate;
