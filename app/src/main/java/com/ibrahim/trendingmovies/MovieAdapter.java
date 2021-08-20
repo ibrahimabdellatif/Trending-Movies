@@ -22,7 +22,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private List<Movie> movies;
     private OnMovieListener listener;
 
-    public MovieAdapter(List<Movie> moviesList , Context context) {
+    public MovieAdapter(List<Movie> moviesList, Context context) {
         this.movies = moviesList;
         this.context = context;
     }
@@ -41,7 +41,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void onBindViewHolder(@NonNull @NotNull MovieAdapter.MovieViewHolder holder, int position) {
         Movie currentMovie = movies.get(position);
         Uri image_url = Uri.parse(currentMovie.getImagePath());
-
         Glide.with(context).load(image_url).into(holder.ivMoviePoster);
         holder.tvMovieTitle.setText(currentMovie.getName());
         holder.tvMovieDate.setText(currentMovie.getDate());
@@ -56,8 +55,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
-        //not included
-        //notifyDataSetChanged();
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder {

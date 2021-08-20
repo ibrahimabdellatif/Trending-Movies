@@ -16,7 +16,7 @@ public class Results implements Serializable {
     @SerializedName("total_results")
     private int total_results;
 
-    public Results(List<Movie> results){
+    public Results(List<Movie> results) {
         this.results = results;
     }
 

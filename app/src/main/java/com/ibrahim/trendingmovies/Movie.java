@@ -33,7 +33,6 @@ public class Movie implements Serializable {
 //    private int total_results;
 
 
-
     public List<Movie> getMovies() {
         return movies;
     }
